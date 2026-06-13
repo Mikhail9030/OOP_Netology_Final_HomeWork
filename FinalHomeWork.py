@@ -23,7 +23,7 @@ class YandexDisk:
         }
 
     def create_folder(self, folder_name: str) -> bool:
-        """Создает папку на Яндекс.Диске."""
+        # Создает папку на Яндекс.Диске
         params = {"path": folder_name}
         response = requests.put(self.base_url, headers=self.headers, params=params)
 
@@ -38,7 +38,7 @@ class YandexDisk:
             return False
 
     def upload_from_url(self, source_url: str, dest_path: str) -> str:
-        """Инициирует загрузку файла по URL и возвращает ссылку на статус операции."""
+        # Загрузка файла по URL и возврат ссылки на статус операции
         upload_url = f"{self.base_url}/upload"
         params = {
             "url": source_url,
@@ -49,7 +49,7 @@ class YandexDisk:
         return response.json().get("href")
 
     def wait_for_operation(self, operation_url: str, timeout: int = 30) -> bool:
-        """Ожидает завершения асинхронной операции на серверах Яндекса."""
+        # Ожидает завершения асинхронной операции на серверах Яндекса.
         start_time = time.time()
         while time.time() - start_time < timeout:
             response = requests.get(operation_url, headers=self.headers)
@@ -63,7 +63,7 @@ class YandexDisk:
         return False
 
     def get_file_info(self, file_path: str) -> dict:
-        """Получает метаданные файла (включая размер)."""
+        # Получает метаданные файла
         params = {"path": file_path}
         response = requests.get(self.base_url, headers=self.headers, params=params)
         response.raise_for_status()
@@ -71,7 +71,7 @@ class YandexDisk:
 
 
 def main():
-    # 1. Сбор входных данных
+
     ya_token = input("Введите токен Яндекс.Диска: ").strip()
     group_name = input("Введите название вашей группы (для папки): ").strip()
 
